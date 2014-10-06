@@ -1,10 +1,8 @@
 PHP Shop Server Emulator
 =============
-
 I'm started this emulator to use with new MuServer Season 6.2+ and Ex700+ OFICIAL WZ VERSION
-*NOT SUPPORTABLE BY ZTEAM SERVER AND OTHERS WITH MODIFIED SHOP
-
-You are free to modify this source code! Enjoy!
+<br>*NOT SUPPORTABLE BY ZTEAM SERVER AND OTHERS WITH MODIFIED SHOP
+<br>You are free to modify this source code! Enjoy!
 
 <b>Version:</b>
 <br>v1.01 Beta
