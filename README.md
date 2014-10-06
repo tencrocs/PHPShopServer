@@ -15,10 +15,3 @@ I'm started this emulator to use with new MuServer Season 6.2+ and Ex700+ OFFICI
 <br>1 - Edit settings variables in "Server.php"
 <br>2 - Set your php folder in "Start.bat"
 <br>3 - Execute "Start.bat"
-
-<b>SQL Query for Credits:</b>
-<br>CREATE TABLE [dbo].[MEMB_CREDITO](
-<br>	[id] [int] IDENTITY(1,1) NOT NULL,
-<br>	[memb___id] [nvarchar](10) NOT NULL,
-<br>	[creditos] [int] NOT NULL
-<br>) ON [PRIMARY]
