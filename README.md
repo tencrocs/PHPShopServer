@@ -6,14 +6,14 @@ I'm started this emulator to use with new MuServer Season 6.2+ and Ex700+ OFICIA
 
 You are free to modify this source code! Enjoy!
 
-Version:
-v1.01 Beta
+<b>Version:</b>
+<br>v1.01 Beta
 
-Working:
-ePoints and Credits
-RF and SMN Cards
+<b>Working:</b>
+<br>ePoints and Credits
+<br>RF and SMN Cards
 
-How to use:
-1 - Edit settings variables in "Server.php"
-2 - Set your php folder in "Start.bat"
-3 - Execute "Start.bat"
+<b>How to use:</b>
+<br>1 - Edit settings variables in "Server.php"
+<br>2 - Set your php folder in "Start.bat"
+<br>3 - Execute "Start.bat"
