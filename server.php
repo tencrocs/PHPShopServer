@@ -7,7 +7,6 @@ $ServerInfo = array("127.0.0.1", 45644); // Ip, Port
 $dbInfo     = array("(LOCAL)", "MuOnline", "user", "password"); //Host, Database, User, Pass
 define("DB_VER", 837); //Tested 837,811
 
-
 include("server.class.php");
 include("dec_enc.class.php");
 $Server = array();
@@ -78,10 +77,12 @@ function wsProtocolCore($clientID, $message, $messageLength) {
             $character = _DecodeHex($aRecv[4]);
 			$character_name = str_replace(chr(0),"",substr($message,71,20));
 			$account_name = str_replace(chr(0),"",substr($message,20,20));
-			$wCoinType = ord(substr($message,157,1)); // 1 ePoint, 2 Credit, 3 Goblin Point
+			$wCoinSection = ord(substr($message,157,1));
             $wItemCode = _DecodeHex(substr($message,145,4));
 			
-            $sql = "SELECT
+			//$Server->log("test: Packet [".bin2hex($message)."] default.".$wCoinType);
+            
+			$sql = "SELECT
                     MEMB_INFO.CSPoints,
                     MEMB_CREDITO.creditos,
 					MEMB_INFO.memb___id
@@ -92,10 +93,17 @@ function wsProtocolCore($clientID, $message, $messageLength) {
             $ncspoints = is_numeric($rs['CSPoints'])?$rs['CSPoints']:0;
 			$ncredits = is_numeric($rs['creditos'])?$rs['creditos']:0;
 			
-			switch($wCoinType)
+			switch($wCoinSection)
 			{
-				case 13: //ePoint
-					//$Server->log("ePoint item ".$wItemCode);
+				//ePoint
+				case 13: //Special
+				case 14: //Acessory
+				case 22: //Buff
+				case 23: //Pet
+				case 24: //Equipment
+				case 25: //Ticket
+				case 26: //Potion
+					$Server->log("ePoint item ".$wItemCode);
 					if($wItemCode == 263){ //Rage Fighter Create Card
 						if($ncspoints >= 500){
 							$sql2 = "SELECT RageFighter FROM AccountCharacter WHERE Id='".$account_name."'";
@@ -133,10 +141,21 @@ function wsProtocolCore($clientID, $message, $messageLength) {
 					}
 					
 					break;
-				case 27: //Credits
+				
+				//Credits
+				case 27: //Special
+				case 28: //Acessory
+				case 29: //Buff
+				case 30: //Pet
+				case 31: //Equipment
+				case 32: //Ticket
+				case 46: //Potion
 					$Server->log("Credits item ".$wItemCode);
 					break;
-				case 57: //Goblin Point
+					
+				// Goblin Point
+				case 57: //Special
+				case 34: //Buff
 					$Server->log("Goblin item ".$wItemCode);
 					break;
 			}
