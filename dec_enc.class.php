@@ -22,7 +22,7 @@ function _hextobin($hexstr)
 
 function _dec2hex($dec, $leading_zeros=0){
 	$h = dechex($dec);
-	if(strlen($h)/2 != 0)$h = "0".$h;
+	if(strlen($h)%2 != 0)$h = "0".$h;
 	return _ReverseHex($h, $leading_zeros);
 }
 
