@@ -210,7 +210,49 @@ function wsProtocolCore($clientID, $message, $messageLength) {
 
 
         case 0x9E:  // OnInquireStorageListPage
-            $Server->log("OnInquireStorageListPage");
+			$character    = _DecodeHex($aRecv[3]);
+			$wRequirePage = _DecodeHex(substr($message,26,4));
+			$wStorageType = _DecodeHex(substr($message,20,1)); //0x47 Gift 0x53 Normal
+			$wTotalPage = 1;
+			$wListCount = 0;
+			$wTotalCount = 0;
+			
+			//$Server->log("test: Packet [".bin2hex($message)."] default.");
+			
+			if($wStorageType == 0x53){ // Normal
+			/*
+				pListMsg.lStorageIndex = StorageList[i].Seq;
+				pListMsg.lItemSeq = StorageList[i].ItemSeq;
+				pListMsg.lProductCode = StorageList[i].ProductSeq;
+				pListMsg.lStorageGroupCode = StorageList[i].GroupCode;
+				pListMsg.lPriceSeq = StorageList[i].PriceSeq;
+				pListMsg.dCashPoint = StorageList[i].CashPoint;
+				pListMsg.chItemType = StorageList[i].ItemType;
+				DataSend(*(_DWORD *)&lpObj->0, (char *)&pListMsg.h, (unsigned __int8)pListMsg.h.size);
+			*/
+		
+				$Server->wsSend($clientID, _hextobin("2E000000"."9E000000".$dbVersion."00000000"."00000000" . bin2hex($aRecv[3]) . _dec2hex($wListCount,8) . _dec2hex($wRequirePage,8) . _dec2hex($wStorageType,2) . "01" . _dec2hex($wTotalPage,8) . _dec2hex($wTotalCount,8) . "00000000"));
+			}
+			
+			if($wStorageType == 0x47){ // Gift
+			/*
+				pGiftList.lStorageIndex = StorageList[i].Seq;
+				pGiftList.lItemSeq = StorageList[i].ItemSeq;
+				pGiftList.lProductCode = StorageList[i].ProductSeq;
+				pGiftList.lStorageGroupCode = StorageList[i].GroupCode;
+				pGiftList.lPriceSeq = StorageList[i].PriceSeq;
+				pGiftList.dCashPoint = StorageList[i].CashPoint;
+				pGiftList.chItemType = StorageList[i].ItemType;
+				CCashShopInGame::ConvertWChar2Char(StorageList[i].SendAccountID, 0x33u, chSenderID, 0xBu);
+				memcpy(pGiftList.chSendUserName, chSenderID, 0xBu);
+				CCashShopInGame::ConvertWChar2Char(StorageList[i].SendMessageA, 0xC9u, chMessage, 0xC8u);
+				memcpy(pGiftList.chMessage, chMessage, 0xC8u);
+				DataSend(*(_DWORD *)&lpObj->0, (char *)&pGiftList.h, (unsigned __int8)pGiftList.h.size);
+			*/
+				$Server->wsSend($clientID, _hextobin("2E000000"."9E000000".$dbVersion."00000000"."00000000" . bin2hex($aRecv[3]) . _dec2hex($wListCount,8) . _dec2hex($wRequirePage,8) . _dec2hex($wStorageType,2) . "01" . _dec2hex($wTotalPage,8) . _dec2hex($wTotalCount,8) . "00000000"));
+			}
+
+			$Server->log("OnInquireStorageListPage");
             break;
 
 
